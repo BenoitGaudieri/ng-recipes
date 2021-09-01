@@ -30,13 +30,7 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
     RecipeStartComponent,
     RecipeEditComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    // FormsModule is needed to disable the way angular handle the submit button.
-    // See: https://www.udemy.com/course/the-complete-guide-to-angular-2/learn/lecture/6656156#questions/4924644
-    FormsModule,
-  ],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [ShoppingListService],
   bootstrap: [AppComponent],
 })
