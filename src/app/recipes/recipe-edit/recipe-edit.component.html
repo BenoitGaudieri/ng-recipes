@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col">
               <button type="submit" class="btn btn-success" [disabled]="!recipeForm.valid">Save</button>
-              <button type="button" class="btn btn-danger">Cancel</button>
+              <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
             </div>
           </div>
           <div class="row">
@@ -21,13 +21,13 @@
             <div class="col">
               <div class="form-group">
                 <label for="imagePath">Image URL</label>
-                <input type="text" id="imagePath" class="form-control" formControlName="imagePath">
+                <input type="text" id="imagePath" class="form-control" formControlName="imagePath" #imagePath>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col">
-              <img src="" alt="" class="img-responsive">
+              <img [src]="imagePath.value" alt="" class="img-responsive my-preview">
             </div>
           </div>
           <div class="row">
