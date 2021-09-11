@@ -8,22 +8,29 @@ import { Recipe } from './recipe.model';
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
 
-  private recipes: Recipe[] = [
-    new Recipe(
-      'Test recipe',
-      'this is a test',
-      'https://blog.giallozafferano.it/inventaricette/wp-content/uploads/2020/04/panino-con-hamburger-fb.jpg',
-      [new Ingredient('Meat', '1'), new Ingredient('French Fries', '21')]
-    ),
-    new Recipe(
-      'Test 2',
-      'this is another test',
-      'https://blog.giallozafferano.it/inventaricette/wp-content/uploads/2020/04/panino-con-hamburger-fb.jpg',
-      [new Ingredient('Cheese', '1'), new Ingredient('Bread', '2')]
-    ),
-  ];
+  //   private recipes: Recipe[] = [
+  //     new Recipe(
+  //       'Test recipe',
+  //       'this is a test',
+  //       'https://blog.giallozafferano.it/inventaricette/wp-content/uploads/2020/04/panino-con-hamburger-fb.jpg',
+  //       [new Ingredient('Meat', '1'), new Ingredient('French Fries', '21')]
+  //     ),
+  //     new Recipe(
+  //       'Test avocado',
+  //       'this is an avocado test',
+  //       'https://www.my-personaltrainer.it/2019/11/18/avocado_900x760.jpeg',
+  //       [new Ingredient('Bread', '2'), new Ingredient('Avvocato', '1')]
+  //     ),
+  //   ];
+  private recipes: Recipe[] = [];
 
   constructor(private slService: ShoppingListService) {}
+
+  //   change the recipes with those passed from the data service linked to the server
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
+  }
 
   getRecipes() {
     //   we use slice to return a copy of the array and not the actual array

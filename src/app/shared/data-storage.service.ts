@@ -20,9 +20,12 @@ export class DataStorageService {
     });
   }
 
+  // This is a method that we can use to store recipes to the server avoid the no ingredients bug
   fetchRecipes() {
     return this.http.get<Recipe[]>(environment.BASE_API).pipe(
+      // rxjs map operator
       map((recipes) => {
+        //   js array map
         return recipes.map((recipe) => {
           return {
             ...recipe,
@@ -31,8 +34,15 @@ export class DataStorageService {
         });
       }),
       tap((recipes) => {
-        //   this.recipeService.setRecipes(recipes);
+        this.recipeService.setRecipes(recipes);
       })
     );
+  }
+
+  //   Simpler version of the above method bugged if there are no ingredients
+  fetchRecipes2() {
+    this.http.get<Recipe[]>(environment.BASE_API).subscribe((recipes) => {
+      this.recipeService.setRecipes(recipes);
+    });
   }
 }
