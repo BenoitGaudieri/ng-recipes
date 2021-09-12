@@ -15,14 +15,14 @@ export class DataStorageService {
 
   storeRecipes() {
     const recipes = this.recipeService.getRecipes();
-    this.http.put(environment.BASE_API, recipes).subscribe((response) => {
+    this.http.put(environment.API_RECIPE, recipes).subscribe((response) => {
       console.log(response);
     });
   }
 
   // This is a method that we can use to store recipes to the server avoid the no ingredients bug
   fetchRecipes() {
-    return this.http.get<Recipe[]>(environment.BASE_API).pipe(
+    return this.http.get<Recipe[]>(environment.API_RECIPE).pipe(
       // rxjs map operator
       map((recipes) => {
         //   js array map
@@ -41,7 +41,7 @@ export class DataStorageService {
 
   //   Simpler version of the above method bugged if there are no ingredients
   fetchRecipes2() {
-    this.http.get<Recipe[]>(environment.BASE_API).subscribe((recipes) => {
+    this.http.get<Recipe[]>(environment.API_RECIPE).subscribe((recipes) => {
       this.recipeService.setRecipes(recipes);
     });
   }
