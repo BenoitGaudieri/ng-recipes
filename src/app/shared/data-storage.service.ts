@@ -27,15 +27,7 @@ export class DataStorageService {
 
   // This is a method that we can use to store recipes to the server avoid the no ingredients bug
   fetchRecipes() {
-    // only take one value from the subject (our user so we can get the token) and then unsubscribe automatically
-    // exhaustMap waits for the first observable to complete before subscribing to the next
-    return this.authService.user.pipe(
-      take(1),
-      exhaustMap((user) => {
-        return this.http.get<Recipe[]>(environment.API_RECIPE, {
-          params: new HttpParams().set('auth', user.token),
-        });
-      }),
+    return this.http.get<Recipe[]>(environment.API_RECIPE).pipe(
       map((recipes) => {
         //   js array map
         return recipes.map((recipe) => {
