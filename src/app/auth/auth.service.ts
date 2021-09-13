@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
-import { Subject, throwError } from 'rxjs';
+import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from './model/user.model';
 
@@ -19,7 +19,8 @@ export interface AuthResponseData {
 })
 export class AuthService {
   constructor(private http: HttpClient) {}
-  user = new Subject<User>();
+  //   It behaves like a Subject, but also gives subcribed users access to the current value of the subject even after the subject has been completed.
+  user = new BehaviorSubject<User>(null);
 
   signUp(email: string, password: string) {
     return this.http
