@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { Observable } from 'rxjs';
+import { AuthResponseData, AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -24,25 +25,28 @@ export class AuthComponent implements OnInit {
     if (!form.valid) {
       return;
     }
+    this.error = null;
     const email = form.value.email;
     const password = form.value.password;
     this.isLoading = true;
+    // Since it's almost the same subscribe response, we can use the same method to handle both login and signup
+    let authObs: Observable<AuthResponseData>;
 
     if (this.isLoginMode) {
-      //   this.authService.login(email, password);
+      authObs = this.authService.login(email, password);
     } else {
-      this.authService.signUp(email, password).subscribe(
-        (resData) => {
-          console.log(resData);
-          this.isLoading = false;
-        },
-        (errorMessage) => {
-          console.error('!!!', errorMessage);
-          this.error = errorMessage;
-          this.isLoading = false;
-        }
-      );
+      authObs = this.authService.signUp(email, password);
     }
+    authObs.subscribe(
+      (resData) => {
+        console.log(resData);
+        this.isLoading = false;
+      },
+      (errorMessage) => {
+        this.error = errorMessage;
+        this.isLoading = false;
+      }
+    );
 
     form.reset();
   }
