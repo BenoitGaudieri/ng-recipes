@@ -21,6 +21,7 @@
         <app-loading-spinner></app-loading-spinner>
       </div>
 
+      <!-- Bootstrap error -->
       <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert" *ngIf="error">
         <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
           <use xlink:href="#exclamation-triangle-fill" /></svg>
@@ -29,6 +30,11 @@
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
+
+      <!-- usual alert component message -->
+      <app-alert [message]="error" *ngIf="error" (close)="onHandleError()"></app-alert>
+      <!-- Dynamic Component template placeholder -->
+      <!-- <ng-template appPlaceholder></ng-template> -->
 
       <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
         <div class="row">
