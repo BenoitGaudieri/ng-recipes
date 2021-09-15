@@ -11,7 +11,8 @@ import { AuthComponent } from './auth/auth.component';
     CommonModule,
     FormsModule,
     // also create the routes
-    RouterModule.forChild([{ path: 'auth', component: AuthComponent }]),
+    // RouterModule.forChild([{ path: 'auth', component: AuthComponent }]),
+    RouterModule.forChild([{ path: '', component: AuthComponent }]),
     SharedModule,
   ],
 })
