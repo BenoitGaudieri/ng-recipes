@@ -23,6 +23,30 @@ export function shoppingListReducer(
         ...state,
         ingredients: [...state.ingredients, ...action.payload],
       };
+    case ShoppingListActions.UPDATE_INGREDIENT:
+      // Old ingredient
+      const ingredient = state.ingredients[action.payload.index];
+      //   New Ingredient
+      const updatedIngredient = {
+        ...ingredient,
+        ...action.payload.ingredient,
+      };
+      //   New Ingredients List clone to not mutate state directly
+      const updatedIngredients = [...state.ingredients];
+      updatedIngredients[action.payload.index] = updatedIngredient;
+
+      //   Return the state with the updated cloned ingredients list
+      return {
+        ...state,
+        ingredients: updatedIngredients,
+      };
+    case ShoppingListActions.DELETE_INGREDIENT:
+      return {
+        ...state,
+        ingredients: state.ingredients.filter(
+          (ing, index) => index !== action.payload
+        ),
+      };
     default:
       return state;
   }
