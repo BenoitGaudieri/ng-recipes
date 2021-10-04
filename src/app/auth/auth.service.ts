@@ -5,6 +5,9 @@ import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from './model/user.model';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import * as fromApp from '../store/app.reducer';
+import * as AuthActions from './store/auth.actions';
 
 export interface AuthResponseData {
   idToken: string;
@@ -19,9 +22,13 @@ export interface AuthResponseData {
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private store: Store<fromApp.AppState>
+  ) {}
   //   It behaves like a Subject, but also gives subcribed users access to the current value of the subject even after the subject has been completed.
-  user = new BehaviorSubject<User>(null);
+  //   user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
   signUp(email: string, password: string) {
@@ -83,7 +90,15 @@ export class AuthService {
 
     // The token is generated on the user model, so we can check if the token is expired or not
     if (loadedUser.token) {
-      this.user.next(loadedUser);
+      //   this.user.next(loadedUser);
+      this.store.dispatch(
+        new AuthActions.Login({
+          email: loadedUser.email,
+          userId: loadedUser.id,
+          token: loadedUser.token,
+          expirationDate: new Date(userData._tokenExpirationDate),
+        })
+      );
       const expirationDuration =
         new Date(userData._tokenExpirationDate).getTime() -
         new Date().getTime();
@@ -92,7 +107,8 @@ export class AuthService {
   }
 
   logout() {
-    this.user.next(null);
+    // this.user.next(null);
+    this.store.dispatch(new AuthActions.Logout());
     this.router.navigate(['/auth']);
     localStorage.removeItem('userData');
     if (this.tokenExpirationTimer) {
@@ -139,8 +155,17 @@ export class AuthService {
     expiresIn: number
   ) {
     const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000);
+    // this const user must be removed
     const user = new User(email, localId, idToken, expirationDate);
-    this.user.next(user);
+    // this.user.next(user);
+    this.store.dispatch(
+      new AuthActions.Login({
+        email,
+        userId: localId,
+        token: idToken,
+        expirationDate,
+      })
+    );
     this.autoLogout(+expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));
   }
