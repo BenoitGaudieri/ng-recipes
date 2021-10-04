@@ -1,3 +1,6 @@
+// The service is handled by NGRX making this file useless
+// This was used in the old rxjs version and I'm keeping it here for reference
+
 import { Ingredient } from '../shared/ingredient.model';
 import { Subject } from 'rxjs';
 
