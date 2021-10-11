@@ -32,9 +32,9 @@
       </div>
 
       <!-- usual alert component message -->
-      <app-alert [message]="error" *ngIf="error" (close)="onHandleError()"></app-alert>
+      <!-- <app-alert [message]="error" *ngIf="error" (close)="onHandleError()"></app-alert> -->
       <!-- Dynamic Component template placeholder -->
-      <!-- <ng-template appPlaceholder></ng-template> -->
+      <ng-template appPlaceholder></ng-template>
 
       <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
         <div class="row">
