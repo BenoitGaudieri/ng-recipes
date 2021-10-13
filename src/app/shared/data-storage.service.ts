@@ -1,11 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { map, catchError, tap, take, exhaustMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { AuthService } from '../auth/auth.service';
-
+// import { AuthService } from '../auth/auth.service';
 import { Recipe } from '../recipes/recipe.model';
 import { RecipeService } from '../recipes/recipe.service';
+import * as fromApp from '../store/app.reducer';
+import * as RecipesActions from '../recipes/store/recipe.actions';
 
 // This service uses another service so we need the Injectable decorator
 @Injectable({ providedIn: 'root' })
@@ -13,9 +15,10 @@ export class DataStorageService {
   // by adding an accessor in front of an argument typescript will automatically create a property of the same name
   // and assign the argument to it
   constructor(
+    // private authService: AuthService
     private http: HttpClient,
     private recipeService: RecipeService,
-    private authService: AuthService
+    private store: Store<fromApp.AppState>
   ) {}
 
   storeRecipes() {
@@ -38,7 +41,8 @@ export class DataStorageService {
         });
       }),
       tap((recipes) => {
-        this.recipeService.setRecipes(recipes);
+        // this.recipeService.setRecipes(recipes);
+        this.store.dispatch(new RecipesActions.SetRecipes(recipes));
       })
     ); // pipe end
   }
