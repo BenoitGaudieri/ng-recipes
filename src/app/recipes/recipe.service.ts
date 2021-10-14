@@ -1,3 +1,9 @@
+/**
+ * Obsolete:
+ * the entire logic is handled by NGRX.
+ * This file is kept for reference only.
+ */
+
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
