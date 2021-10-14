@@ -1,3 +1,9 @@
+/**
+ * Obsolete:
+ * the whole logic is now handled by NGRX.
+ * This file is here for reference only.
+ */
+
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
