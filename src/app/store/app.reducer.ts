@@ -4,7 +4,7 @@ import * as fromRecipes from '../recipes/store/recipe.reducer';
 import { ActionReducerMap } from '@ngrx/store';
 
 export interface AppState {
-  auth: fromAuth.AuthState;
+  auth: fromAuth.State;
   shoppingList: fromShoppingList.State;
   recipes: fromRecipes.State;
 }

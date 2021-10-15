@@ -55,8 +55,8 @@ export class RecipeService {
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     // this.slService.addIngredients(ingredients);
-    // NGRX:
-    this.store.dispatch(new ShoppingListActions.AddIngredients(ingredients));
+    // NGRX old:
+    // this.store.dispatch(new ShoppingListActions.AddIngredients(ingredients));
   }
 
   addRecipe(recipe: Recipe) {
