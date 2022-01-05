@@ -14,6 +14,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { RecipeEffects } from './recipes/store/recipe.effects';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -27,6 +28,7 @@ import { RecipeEffects } from './recipes/store/recipe.effects';
     StoreRouterConnectingModule.forRoot(),
     SharedModule,
     CoreModule,
+    BrowserAnimationsModule,
   ],
 
   bootstrap: [AppComponent],

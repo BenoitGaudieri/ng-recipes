@@ -67,12 +67,12 @@ export class AuthComponent implements OnInit, OnDestroy {
       //   authObs = this.authService.login(email, password);
       // NGRX:
       this.store.dispatch(
-        new AuthActions.LoginStart({ email: email, password: password })
+        AuthActions.loginStart({ email: email, password: password })
       );
     } else {
       //   authObs = this.authService.signUp(email, password);
       this.store.dispatch(
-        new AuthActions.SignupStart({ email: email, password: password })
+        AuthActions.signupStart({ email: email, password: password })
       );
     }
     // authObs.subscribe(
@@ -95,7 +95,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   //   for the normal ngif alert component
   onHandleError() {
     // this.error = null;
-    this.store.dispatch(new AuthActions.ClearError());
+    this.store.dispatch(AuthActions.clearError());
   }
 
   //   dynamic alert component
