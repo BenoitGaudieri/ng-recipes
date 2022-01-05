@@ -7,13 +7,11 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AlertComponent } from 'src/app/shared/alert/alert.component';
 import { PlaceholderDirective } from 'src/app/shared/placeholder/placeholder.directive';
 import * as fromApp from '../../store/app.reducer';
 import * as AuthActions from '../store/auth.actions';
-// import { Router } from '@angular/router';
-// import { AuthResponseData, AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -31,8 +29,6 @@ export class AuthComponent implements OnInit, OnDestroy {
   private storeSub: Subscription;
 
   constructor(
-    // private authService: AuthService,
-    // private router: Router,
     private componentFactoryResolver: ComponentFactoryResolver,
     private store: Store<fromApp.AppState>
   ) {}
@@ -59,35 +55,17 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.error = null;
     const email = form.value.email;
     const password = form.value.password;
-    // this.isLoading = true;
-    // Since it's almost the same subscribe response, we can use the same method to handle both login and signup
-    // let authObs: Observable<AuthResponseData>;
 
     if (this.isLoginMode) {
-      //   authObs = this.authService.login(email, password);
       // NGRX:
       this.store.dispatch(
         AuthActions.loginStart({ email: email, password: password })
       );
     } else {
-      //   authObs = this.authService.signUp(email, password);
       this.store.dispatch(
         AuthActions.signupStart({ email: email, password: password })
       );
     }
-    // authObs.subscribe(
-    //   (resData) => {
-    //     console.log(resData);
-    //     this.isLoading = false;
-    //     this.router.navigate(['/recipes']);
-    //   },
-    //   (errorMessage) => {
-    //     this.error = errorMessage;
-    //     // dynamic error alert
-    //     // this.showErrorAlert(errorMessage);
-    //     this.isLoading = false;
-    //   }
-    // );
 
     form.reset();
   }
